@@ -1,7 +1,22 @@
 from selenium import webdriver
 from time import sleep
-
+import gspread 
+from oauth2client.service_account import ServiceAccountCredentials
+from pprint import pprint
 from creds import username, password
+
+scope = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',"https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
+
+credentials = ServiceAccountCredentials.from_json_keyfile_name('bot-creds.json', scope)
+
+client = gspread.authorize(credentials)
+
+sheet = client.open('HexaPo Cost Sheet').get_worksheet(5)
+
+data = sheet.get_all_records()
+data2= sheet.row_values(2)
+data3= sheet.col_values(2)
+
 
 class KrowdsterBot():
     def __init__(self):
@@ -28,8 +43,23 @@ class KrowdsterBot():
         backer_btn = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div/div/div[1]/div/a')
         backer_btn.click()
 
-    
+        Platform_btn = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/form/div/div/div[1]/select/option[2]')
+        Platform_btn.click()
 
+        Category_btn = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/form/div/div/div[2]/select/option[15]')
+        Category_btn.click()
+
+        sleep(2)
+
+        Find_btn = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/form/div/div/div[5]/button[1]/span')
+        Find_btn.click()
+
+
+    
 bot = KrowdsterBot()
 bot.login()
 bot.Select()
+
+pprint(data)
+pprint(data2)
+pprint(data3)
