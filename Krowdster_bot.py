@@ -19,6 +19,11 @@ class KrowdsterBot():
         login_btn = self.driver.find_element_by_xpath('/html/body/div[1]/div[2]/div[1]/form/div[3]/input')
         login_btn.click()
 
+        sleep(6)
+
+        popup_1 = self.driver.find_element_by_xpath('/html/body/div[9]/div/div[3]/div[2]/button[1]')
+        popup_1.click()
+
     def Select(self):
         backer_btn = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div/div/div[1]/div/a')
         backer_btn.click()
