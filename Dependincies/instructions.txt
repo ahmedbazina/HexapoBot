@@ -1,0 +1,11 @@
+						Video Tut(https://www.youtube.com/watch?v=dz59GsdvUF8)
+1) download chromedriver
+2) create a new folder into your C dive called webDrivers
+3) go to environment varialbles and under system variables Select PATH
+4) Click edit and then click NEW and add the folder location C:\webDrivers
+5) Press Ok and open CMD 
+6) Type chromedriver
+7) once it says starting chromedriver on port 9515 it means it was installed successfully
+8) Press CTRL+C to Stop it  
+
+
