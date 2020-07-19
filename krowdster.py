@@ -1,8 +1,10 @@
+import gspread 
 from selenium import webdriver
-from getpass import getpass
 from time import sleep
-
+from oauth2client.service_account import ServiceAccountCredentials
+from pprint import pprint
 from creds import username, password
+
 
 driver = webdriver.Chrome("C:\webDrivers\chromedriver.exe")
 driver.get('https://app.krowdster.co/login')
@@ -30,36 +32,39 @@ sleep(2)
 Find_btn = driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/form/div/div/div[5]/button[1]/span')
 Find_btn.click()
 
-sleep(2)
+sleep(5)
 
-Profilepic = driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[1]/div[5]/a/img')
-img = Profilepic.get_attribute('src')
-print(img)
+def data():
+	scope = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',"https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
+	credentials = ServiceAccountCredentials.from_json_keyfile_name('bot-creds.json', scope)
+	client = gspread.authorize(credentials)
+	sheet = client.open('HexaPo Cost Sheet').get_worksheet(6)
+	
+	# For loop to get all backers on the page starting at 24 stopping at 0 in reverse order (downwards)
+	for i in range(24, 0, -1):
+		Pic = driver.find_element_by_xpath("//*[@id='wrapper']/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[1]/div[5]/a/img".format(i)).get_attribute('src')
+		image = "=IMAGE({})".format(Pic)
 
-Name = driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[2]/div/h4/a')
-name = Name.text
-print(name)
+		Name = driver.find_element_by_xpath("//*[@id='wrapper']/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[2]/div/h4/a".format(i)).text
 
-Location = driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[2]/div/div')
-Loc = Location.text
-print(Loc)
+		Loc = driver.find_element_by_xpath("//*[@id='wrapper']/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[2]/div/div".format(i)).text
 
-Kickstarter = driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[3]/div/div[1]/a[1]')
-KS = Kickstarter.get_attribute('href')
-print(KS)
+		Categ = driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/form/div/div/div[2]/select/option[15]').text
 
-Facebook = driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[3]/div/div[1]/a[2]')
-FB = Facebook.get_attribute('href')
-print(FB)
+		KS = driver.find_element_by_xpath("//*[@id='wrapper']/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[3]/div/div[1]/a[1]".format(i)).get_attribute('href')
 
-TW = driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[3]/div/div[1]/a[3]')
-Twitter = TW.get_attribute('href')
-print(Twitter)
+		FB = driver.find_element_by_xpath("//*[@id='wrapper']/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[3]/div/div[1]/a[2]".format(i)).get_attribute('href')
 
-Category = driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/form/div/div/div[2]/select/option[15]')
-Categ = Category.get_attribute('value')
-print(Categ)
+		TW = driver.find_element_by_xpath("//*[@id='wrapper']/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[3]/div/div[1]/a[3]".format(i)).get_attribute('href')
 
-Backer = driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[1]/div[1]')
-Backed = Backer.text
-print(Backed)
+		Backer = driver.find_element_by_xpath("//*[@id='wrapper']/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[1]/div[1]".format(i)).text.strip('Backed')
+
+		#print(Backer.strip('Backed'))
+
+		row = [image, Name, Loc, Categ, KS, FB, TW, Backer]
+		index = 2
+		sheet.insert_row(row, index)
+
+
+
+data()	
