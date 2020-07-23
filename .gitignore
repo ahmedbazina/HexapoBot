@@ -1,2 +1,5 @@
+__pycache__/
+*.py[cod]
+
 bot-creds.json
 creds.py
