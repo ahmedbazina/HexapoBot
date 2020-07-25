@@ -1,5 +1,5 @@
 # https://www.youtube.com/watch?v=lvFAuUcowT4
-#Imports the web driver and sleep from selenium & time 
+# Imports the web driver and sleep from selenium & time 
 from selenium import webdriver
 from time import sleep
 
