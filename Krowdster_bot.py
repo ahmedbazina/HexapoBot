@@ -43,9 +43,6 @@ class KrowdsterBot():
         popup_1 = self.driver.find_element_by_xpath('/html/body/div[9]/div/div[3]/div[2]/button[1]')
         popup_1.click()
 
-        bot.SelectFilters()
-
-
     def SelectFilters(self):
         # Select filters function saving xpath elements in variables with actions that click on buttons & sleep for the page to load 
 
@@ -64,8 +61,6 @@ class KrowdsterBot():
         Find_btn.click()
 
         sleep(5)
-
-        bot.AddToSheet()
  
     def FindSingleUser(self):
         # Find single user function for debugging
@@ -100,7 +95,31 @@ class KrowdsterBot():
 
         Backer = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[1]/div[1]')
         Backed = Backer.text
-        print(Backed)
+        print(Backed)  
+
+    def NavigatePage(self):
+        # Find Next button and click on it then wait .5 seconds and close the Bot popup
+
+        Page = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[2]/ul/li[12]/a')
+        Page.click()
+
+        sleep(0.5)
+
+        popup_2 = self.driver.find_element_by_xpath('//*[@id="bot1-Msg1"]')
+        popup_2.click()
+
+    def AutoNavAdd(self):
+        # Auto function to run the NavigatePage function automatically 
+
+        while True:
+        # While the function is true execute the AddToSheet function and sleep for 50 seconds 
+        # Then execute the NavigationPage function sleep for 50 seconds
+        # This is to avoid getting kicked out by Google and stay under our daily quotas
+
+            self.AddToSheet()
+            sleep(50)
+            self.NavigatePage()
+            sleep(50)
 
     def AddToSheet(self):
         # Function that initiates connection with Gsheets api and dynamically add the data from the site
@@ -151,21 +170,19 @@ class KrowdsterBot():
         # Column = sheet.col_values(2)
         # pprint(Column)
 
+    def Run(self):
+        # Run function to execute the bot automatically in the order displayed
+        # Comment and uncomment anything below to debug
 
-    # Auto function to run the whole script 
-
-    # def auto_run(self):
-    #     while True:
-    #         sleep(0.5)
-    #         try:
-    #             self.like()
-    #         except Exception:
-    #             try:
-    #                 self.close_popup()
-    #             except Exception:
-    #                 self.close_match()
+        self.login()
+        self.SelectFilters()
+        # self.FindSingleUser()
+        # self.NavigatePage()
+        self.AutoNavAdd()
+        # self.AddToSheet()
 
 
-# Create an instanance of the bot and Run login function
+# Create an instanance of the bot and Run function
+
 bot = KrowdsterBot()
-bot.login()
+bot.Run()
