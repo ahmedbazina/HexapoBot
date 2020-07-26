@@ -132,7 +132,7 @@ class KrowdsterBot():
 		credentials = ServiceAccountCredentials.from_json_keyfile_name('bot-creds.json', scope)
 		client = authorize(credentials)
 		# Change 5 (krowdster) to 6 (test) when debugging 
-		sheet = client.open('HexaPo Cost Sheet').get_worksheet(5)
+		sheet = client.open('HexaPo Cost Sheet').get_worksheet(6)
 
 		# For loop to get all backers on the page starting at 24 stopping at 0 in reverse order -1 (downwards)
 		# Insert row starting at index
@@ -171,7 +171,7 @@ class KrowdsterBot():
 	    # Column = sheet.col_values(2)
 	    # pprint(Column)
 
-	# def Time(self):
+	def Time(self):
 		#Time function to find start, end and Total time it takes for specified function below
 
 	    # Get the start time & print it 
@@ -180,6 +180,8 @@ class KrowdsterBot():
 		print("Start Time: ", start)
 
 		# Comment or uncomment What you want to find the time for
+		# Whatever you uncomment MAKE SURE YOU COMMENT IT IN RUN Function
+
 		# self.FindSingleUser()
 		# self.NavigatePage()
 		# self.AutoNavAdd()
@@ -196,18 +198,19 @@ class KrowdsterBot():
 
 	def Run(self):
 	    # Run function to execute the bot automatically in the order displayed
-	    # Comment and uncomment anything below to debug
+	    # Comment and uncomment anything below to debug or run
 
 		self.login()
 		self.SelectFilters()
+		self.Time()
 		# self.FindSingleUser()
 		# self.NavigatePage()
 		# self.AutoNavAdd()
-		self.AddToSheet()
+		# self.AddToSheet()
+
 
 
 # Create an instanance of the bot and Run function
 
 bot = KrowdsterBot()
 bot.Run()
-# bot.Time()
