@@ -39,7 +39,7 @@ def data():
 	scope = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',"https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
 	credentials = ServiceAccountCredentials.from_json_keyfile_name('bot-creds.json', scope)
 	client = gspread.authorize(credentials)
-	sheet = client.open('HexaPo Cost Sheet').get_worksheet(5)
+	sheet = client.open('HexaPo Cost Sheet').get_worksheet(6)
 	
 	# For loop to get all backers on the page starting at 24 stopping at 0 in reverse order (downwards)
 	for i in range(24, 0, -1):
@@ -66,14 +66,4 @@ def data():
 		index = 2
 		sheet.insert_row(row, index)
 
-    def auto_swipe(self):
-        while True:
-            sleep(0.5)
-            try:
-                self.like()
-            except Exception:
-                try:
-                    self.close_popup()
-                except Exception:
-                    self.close_match()
 data()	
