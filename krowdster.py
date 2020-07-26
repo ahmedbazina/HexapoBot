@@ -39,9 +39,7 @@ def data():
 	credentials = ServiceAccountCredentials.from_json_keyfile_name('bot-creds.json', scope)
 	client = authorize(credentials)
 	sheet = client.open('HexaPo Cost Sheet').get_worksheet(6)
-	start = time()
-	print("Start Time: ")
-	print(start)
+	
 	# For loop to get all backers on the page starting at 24 stopping at 0 in reverse order (downwards)
 	for i in range(24, 0, -1):
 		Pic = driver.find_element_by_xpath("//*[@id='wrapper']/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[1]/div[5]/a/img".format(i)).get_attribute('src')
@@ -61,17 +59,22 @@ def data():
 
 		Backer = driver.find_element_by_xpath("//*[@id='wrapper']/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[1]/div[1]".format(i)).text.strip('Backed')
 
-		#print(Backer.strip('Backed'))
-
 		row = [image, Name, Loc, Categ, KS, FB, TW, Backer]
 		index = 2
 		sheet.insert_row(row, index)
+
+ 
+def Time():
+	start = time()
+	print("Start Time: ", start)
+
+	data()
+	
 	stop = time()
-	print("Stop Time: ")
-	print(stop)
+	print("Stop Time: ", stop)
 
-	print("Total Time: ")
-	print(stop - start)
+	total = (stop - start)
+	print("Total Time: ", total)
 
-data()	
+Time()
 
