@@ -15,189 +15,199 @@ from creds import username, password
 
 class KrowdsterBot():
      
-    def __init__(self):
-        # Start web driver chrome
+	def __init__(self):
+		# Start web driver chrome
 
-        self.driver = webdriver.Chrome()
- 
-    def login(self):
-        # Login function saving xpath elements in variables with actions that send login details from creds.py and click on buttons:
-        # Open the site 
-        # Enter email, password & click login button
-        # Sleep for 5 seconds until popup appear then close it
+		self.driver = webdriver.Chrome()
 
-        self.driver.get('https://app.krowdster.co/login')
- 
-        email_in = self.driver.find_element_by_xpath('/html/body/div[1]/div[2]/div[1]/form/div[1]/input')
-        email_in.send_keys(username)
+	def login(self):
+		# Login function saving xpath elements in variables with actions that send login details from creds.py and click on buttons:
+		# Open the site 
+		# Enter email, password & click login button
+		# Sleep for 5 seconds until popup appear then close it
 
-        pw_in = self.driver.find_element_by_xpath('/html/body/div[1]/div[2]/div[1]/form/div[2]/div/input')
-        pw_in.send_keys(password)
+		self.driver.get('https://app.krowdster.co/login')
 
-        login_btn = self.driver.find_element_by_xpath('/html/body/div[1]/div[2]/div[1]/form/div[3]/input')
-        login_btn.click()
+		email_in = self.driver.find_element_by_xpath('/html/body/div[1]/div[2]/div[1]/form/div[1]/input')
+		email_in.send_keys(username)
 
-        sleep(5)
+		pw_in = self.driver.find_element_by_xpath('/html/body/div[1]/div[2]/div[1]/form/div[2]/div/input')
+		pw_in.send_keys(password)
 
-        popup_1 = self.driver.find_element_by_xpath('/html/body/div[9]/div/div[3]/div[2]/button[1]')
-        popup_1.click()
+		login_btn = self.driver.find_element_by_xpath('/html/body/div[1]/div[2]/div[1]/form/div[3]/input')
+		login_btn.click()
 
-    def SelectFilters(self):
-        # Select filters function saving xpath elements in variables with actions that click on buttons & sleep for the page to load 
+		sleep(5)
 
-        backer_btn = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div/div/div[1]/div/a')
-        backer_btn.click()
+		popup_1 = self.driver.find_element_by_xpath('/html/body/div[9]/div/div[3]/div[2]/button[1]')
+		popup_1.click()
 
-        Platform_btn = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/form/div/div/div[1]/select/option[2]')
-        Platform_btn.click()
+	def SelectFilters(self):
+		# Select filters function saving xpath elements in variables with actions that click on buttons & sleep for the page to load 
 
-        Category_btn = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/form/div/div/div[2]/select/option[15]')
-        Category_btn.click()
+		backer_btn = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div/div/div[1]/div/a')
+		backer_btn.click()
 
-        sleep(5)
+		Platform_btn = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/form/div/div/div[1]/select/option[2]')
+		Platform_btn.click()
 
-        Find_btn = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/form/div/div/div[5]/button[1]/span')
-        Find_btn.click()
+		Category_btn = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/form/div/div/div[2]/select/option[15]')
+		Category_btn.click()
 
-        sleep(5)
- 
-    def FindSingleUser(self):
-        # Find single user function for debugging
+		sleep(10)
 
-        Pic = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[1]/div[5]/a/img')
-        Profilepic = Pic.get_attribute('src')
-        print(Profilepic)
-                
-        name = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[2]/div/h4/a')
-        Name = name.text
-        print(Name)
+		Find_btn = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/form/div/div/div[5]/button[1]/span')
+		Find_btn.click()
 
-        Loc = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[2]/div/div')
-        Location = Loc.text
-        print(Location)
+		sleep(10)
 
-        Categ = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/form/div/div/div[2]/select/option[15]')
-        Category = Categ.text
-        print(Category)
+	def FindSingleUser(self):
+		# Find single user function for debugging
 
-        KS = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[3]/div/div[1]/a[1]')
-        Kickstarter = KS.get_attribute('href')
-        print(Kickstarter)
-         
-        FB = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[3]/div/div[1]/a[2]')
-        Facebook = FB.get_attribute('href')
-        print(Facebook)
+		Pic = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[1]/div[5]/a/img')
+		Profilepic = Pic.get_attribute('src')
+		print(Profilepic)
+		        
+		name = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[2]/div/h4/a')
+		Name = name.text
+		print(Name)
 
-        TW = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[3]/div/div[1]/a[3]')
-        Twitter = TW.get_attribute('href')
-        print(Twitter)
+		Loc = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[2]/div/div')
+		Location = Loc.text
+		print(Location)
 
-        Backer = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[1]/div[1]')
-        Backed = Backer.text
-        print(Backed)  
+		Categ = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/form/div/div/div[2]/select/option[15]')
+		Category = Categ.text
+		print(Category)
 
-    def NavigatePage(self):
-        # Find Next button and click on it then wait .5 seconds and close the Bot popup
+		KS = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[3]/div/div[1]/a[1]')
+		Kickstarter = KS.get_attribute('href')
+		print(Kickstarter)
+		 
+		FB = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[3]/div/div[1]/a[2]')
+		Facebook = FB.get_attribute('href')
+		print(Facebook)
 
-        Page = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[2]/ul/li[12]/a')
-        Page.click()
+		TW = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[3]/div/div[1]/a[3]')
+		Twitter = TW.get_attribute('href')
+		print(Twitter)
 
-        sleep(0.5)
+		Backer = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[1]/div/div[1]/div[1]')
+		Backed = Backer.text
+		print(Backed)  
 
-        popup_2 = self.driver.find_element_by_xpath('//*[@id="bot1-Msg1"]')
-        popup_2.click()
+	def NavigatePage(self):
+		# Find Next button and click on it then wait .5 seconds and close the Bot popup
 
-    def AutoNavAdd(self):
-        # Auto function to run the AddToSheet & NavigatePage function automatically 
+		Page = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[2]/ul/li[12]/a')
+		Page.click()
 
-        while True:
-        # While the function is true execute the AddToSheet function and sleep for 50 seconds 
-        # Then execute the NavigationPage function sleep for 50 seconds
-        # This is to avoid getting kicked out by Google and stay under our daily quotas
-        # 500 write requests per 100 seconds
+		sleep(0.5)
 
-            self.AddToSheet()
-            sleep(50)
-            self.NavigatePage()
-            sleep(50)
+		popup_2 = self.driver.find_element_by_xpath('//*[@id="bot1-Msg1"]')
+		popup_2.click()
 
-    def AddToSheet(self):
-        # Function that initiates connection with Gsheets api and dynamically add the data from the site
-        # Add scope for api
-        # Credentials to access api
-        # inititate client connection to Gsheets api
-        # Client access sheet by name and get worksheet by index
+	def AutoNavAdd(self):
+		# Auto function to run the AddToSheet & NavigatePage function automatically 
 
-        scope = ["https://spreadsheets.google.com/feeds","https://www.googleapis.com/auth/spreadsheets","https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
-        credentials = ServiceAccountCredentials.from_json_keyfile_name('bot-creds.json', scope)
-        client = authorize(credentials)
-        # Change 5 (krowdster) to 6 (test) when debugging 
-        sheet = client.open('HexaPo Cost Sheet').get_worksheet(5)
+		while True:
+		# While the function is true execute the AddToSheet function and sleep for 50 seconds 
+		# Then execute the NavigationPage function sleep for 50 seconds
+		# This is to avoid getting kicked out by Google and stay under our daily quotas
+		# 500 write requests per 100 seconds
 
-        # Get the start time & print it 
-        # For loop to get all backers on the page starting at 24 stopping at 0 in reverse order -1 (downwards)
-        # Insert row starting at index
+			self.AddToSheet()
+			sleep(50)
+			self.NavigatePage()
+			sleep(50)
 
-        start = time()
-        print("Start Time: ")
-        print(start)
+	def AddToSheet(self):
+	    # Function that initiates connection with Gsheets api and dynamically add the data from the site
+	    # Add scope for api
+	    # Credentials to access api
+	    # inititate client connection to Gsheets api
+	    # Client access sheet by name and get worksheet by index
 
-        for i in range(24, 0, -1):
-            Pic = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[1]/div[5]/a/img'.format(i)).get_attribute('src')
-            Profile = '=IMAGE("{}")'.format(Pic)
+		scope = ["https://spreadsheets.google.com/feeds","https://www.googleapis.com/auth/spreadsheets","https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
+		credentials = ServiceAccountCredentials.from_json_keyfile_name('bot-creds.json', scope)
+		client = authorize(credentials)
+		# Change 5 (krowdster) to 6 (test) when debugging 
+		sheet = client.open('HexaPo Cost Sheet').get_worksheet(5)
 
-            Name = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[2]/div/h4/a'.format(i)).text
+		# For loop to get all backers on the page starting at 24 stopping at 0 in reverse order -1 (downwards)
+		# Insert row starting at index
 
-            Loc = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[2]/div/div'.format(i)).text
+		for i in range(24, 0, -1):
+			Pic = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[1]/div[5]/a/img'.format(i)).get_attribute('src')
+			Profile = '=IMAGE("{}")'.format(Pic)
 
-            Categ = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/form/div/div/div[2]/select/option[15]').text
+			Name = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[2]/div/h4/a'.format(i)).text
 
-            KS = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[3]/div/div[1]/a[1]'.format(i)).get_attribute('href')
+			Loc = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[2]/div/div'.format(i)).text
 
-            FB = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[3]/div/div[1]/a[2]'.format(i)).get_attribute('href')
+			Categ = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/form/div/div/div[2]/select/option[15]').text
 
-            TW = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[3]/div/div[1]/a[3]'.format(i)).get_attribute('href')
+			KS = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[3]/div/div[1]/a[1]'.format(i)).get_attribute('href')
 
-            Backer = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[1]/div[1]'.format(i)).text.strip('Backed')
+			FB = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[3]/div/div[1]/a[2]'.format(i)).get_attribute('href')
 
-            row = [Profile, Name, Loc, Categ, KS, FB, TW, Backer]
-            index = 2
-            sheet.insert_row(row, index)
+			TW = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[3]/div/div[1]/a[3]'.format(i)).get_attribute('href')
 
-        # Get stop time & print it
-        stop = time()
-        print("Stop Time: ")
-        print(stop)
+			Backer = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[1]/div[1]'.format(i)).text.strip('Backed')
 
-        # Get total time by substituting stop from start
-        print("Total Time: ")
-        print(stop - start)
+			row = [Profile, Name, Loc, Categ, KS, FB, TW, Backer]
+			index = 2
+			sheet.insert_row(row, index)
 
-        # Variables to read all records, single row or column within the worksheet stated above 
-        # Print what was read
+	    # Variables to read all records, single row or column within the worksheet stated above 
+	    # Print what was read
 
-        # allRecords = sheet.get_all_records()
-        # pprint(allRecords)
+	    # allRecords = sheet.get_all_records()
+	    # pprint(allRecords)
 
-        # Row = sheet.row_values(2)
-        # pprint(Row)
+	    # Row = sheet.row_values(2)
+	    # pprint(Row)
 
-        # Column = sheet.col_values(2)
-        # pprint(Column)
+	    # Column = sheet.col_values(2)
+	    # pprint(Column)
 
-    def Run(self):
-        # Run function to execute the bot automatically in the order displayed
-        # Comment and uncomment anything below to debug
+	# def Time(self):
+		#Time function to find start, end and Total time it takes for specified function below
 
-        self.login()
-        self.SelectFilters()
-        # self.FindSingleUser()
-        # self.NavigatePage()
-        # self.AutoNavAdd()
-        self.AddToSheet()
+	    # Get the start time & print it 
+		print("...............................................")
+		start = time()
+		print("Start Time: ", start)
+
+		# Comment or uncomment What you want to find the time for
+		# self.FindSingleUser()
+		# self.NavigatePage()
+		# self.AutoNavAdd()
+		self.AddToSheet()
+	    
+	    # Get stop time & print it
+		stop = time()
+		print("Stop Time: ", stop)
+		
+		# Get total time by substituting stop from start
+		total = (stop - start)
+		print("Total Time: ", total)
+		print("...............................................")
+
+	def Run(self):
+	    # Run function to execute the bot automatically in the order displayed
+	    # Comment and uncomment anything below to debug
+
+		self.login()
+		self.SelectFilters()
+		# self.FindSingleUser()
+		# self.NavigatePage()
+		# self.AutoNavAdd()
+		self.AddToSheet()
 
 
 # Create an instanance of the bot and Run function
 
 bot = KrowdsterBot()
 bot.Run()
+# bot.Time()
