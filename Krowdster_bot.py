@@ -131,8 +131,8 @@ class KrowdsterBot():
         scope = ["https://spreadsheets.google.com/feeds","https://www.googleapis.com/auth/spreadsheets","https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
         credentials = ServiceAccountCredentials.from_json_keyfile_name('bot-creds.json', scope)
         client = gspread.authorize(credentials)
-        # Change 5 to 6 when debugging 
-        sheet = client.open('HexaPo Cost Sheet').get_worksheet(5)
+        # Change 5 (krowdster) to 6 (test) when debugging 
+        sheet = client.open('HexaPo Cost Sheet').get_worksheet(6)
 
         # For loop to get all backers on the page starting at 24 stopping at 0 in reverse order (downwards)
         # Insert row starting at index
