@@ -1,10 +1,10 @@
 # https://www.youtube.com/watch?v=cnPlKLEGR7E&t=607s
-# Imports the web driver and sleep from selenium & time 
+# Imports the web driver, sleep and time from selenium & time 
 from selenium import webdriver
-from time import sleep
+from time import sleep, time
 
 # Import Google Sheets & Oauth2client to work with Gsheets api
-import gspread 
+from gspread import authorize 
 from oauth2client.service_account import ServiceAccountCredentials
 
 # Pretty print to visualise data nicely 
@@ -25,7 +25,6 @@ class KrowdsterBot():
         # Open the site 
         # Enter email, password & click login button
         # Sleep for 5 seconds until popup appear then close it
-        # inititate/Run SelectFilters           
 
         self.driver.get('https://app.krowdster.co/login')
  
@@ -109,12 +108,13 @@ class KrowdsterBot():
         popup_2.click()
 
     def AutoNavAdd(self):
-        # Auto function to run the NavigatePage function automatically 
+        # Auto function to run the AddToSheet & NavigatePage function automatically 
 
         while True:
         # While the function is true execute the AddToSheet function and sleep for 50 seconds 
         # Then execute the NavigationPage function sleep for 50 seconds
         # This is to avoid getting kicked out by Google and stay under our daily quotas
+        # 500 write requests per 100 seconds
 
             self.AddToSheet()
             sleep(50)
@@ -130,12 +130,17 @@ class KrowdsterBot():
 
         scope = ["https://spreadsheets.google.com/feeds","https://www.googleapis.com/auth/spreadsheets","https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
         credentials = ServiceAccountCredentials.from_json_keyfile_name('bot-creds.json', scope)
-        client = gspread.authorize(credentials)
+        client = authorize(credentials)
         # Change 5 (krowdster) to 6 (test) when debugging 
-        sheet = client.open('HexaPo Cost Sheet').get_worksheet(6)
+        sheet = client.open('HexaPo Cost Sheet').get_worksheet(5)
 
-        # For loop to get all backers on the page starting at 24 stopping at 0 in reverse order (downwards)
+        # Get the start time & print it 
+        # For loop to get all backers on the page starting at 24 stopping at 0 in reverse order -1 (downwards)
         # Insert row starting at index
+
+        start = time()
+        print("Start Time: ")
+        print(start)
 
         for i in range(24, 0, -1):
             Pic = self.driver.find_element_by_xpath('//*[@id="wrapper"]/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[1]/div[5]/a/img'.format(i)).get_attribute('src')
@@ -159,6 +164,15 @@ class KrowdsterBot():
             index = 2
             sheet.insert_row(row, index)
 
+        # Get stop time & print it
+        stop = time()
+        print("Stop Time: ")
+        print(stop)
+
+        # Get total time by substituting stop from start
+        print("Total Time: ")
+        print(stop - start)
+
         # Variables to read all records, single row or column within the worksheet stated above 
         # Print what was read
 
@@ -179,8 +193,8 @@ class KrowdsterBot():
         self.SelectFilters()
         # self.FindSingleUser()
         # self.NavigatePage()
-        self.AutoNavAdd()
-        # self.AddToSheet()
+        # self.AutoNavAdd()
+        self.AddToSheet()
 
 
 # Create an instanance of the bot and Run function

@@ -1,13 +1,12 @@
-import gspread 
+from gspread import authorize 
 from selenium import webdriver
-from time import sleep
+from time import sleep, time
 from oauth2client.service_account import ServiceAccountCredentials
 from pprint import pprint
 from creds import username, password
-import re
 
 
-driver = webdriver.Chrome("C:\webDrivers\chromedriver.exe")
+driver = webdriver.Chrome()
 driver.get('https://app.krowdster.co/login')
 		
 email_in = driver.find_element_by_xpath('/html/body/div[1]/div[2]/div[1]/form/div[1]/input')
@@ -38,9 +37,11 @@ sleep(5)
 def data():
 	scope = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',"https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
 	credentials = ServiceAccountCredentials.from_json_keyfile_name('bot-creds.json', scope)
-	client = gspread.authorize(credentials)
+	client = authorize(credentials)
 	sheet = client.open('HexaPo Cost Sheet').get_worksheet(6)
-	
+	start = time()
+	print("Start Time: ")
+	print(start)
 	# For loop to get all backers on the page starting at 24 stopping at 0 in reverse order (downwards)
 	for i in range(24, 0, -1):
 		Pic = driver.find_element_by_xpath("//*[@id='wrapper']/article/div[2]/div[2]/div/div/div/div/div/div[4]/div/div[1]/div[{}]/div/div[1]/div[5]/a/img".format(i)).get_attribute('src')
@@ -65,5 +66,12 @@ def data():
 		row = [image, Name, Loc, Categ, KS, FB, TW, Backer]
 		index = 2
 		sheet.insert_row(row, index)
+	stop = time()
+	print("Stop Time: ")
+	print(stop)
+
+	print("Total Time: ")
+	print(stop - start)
 
 data()	
+
